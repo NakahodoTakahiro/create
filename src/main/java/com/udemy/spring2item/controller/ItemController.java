@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -260,34 +259,6 @@ public class ItemController {
 		
 		moneyService.spendadd(spendAdd);
 		return "redirect:/spend";
-	}
-	/*
-	 * 合計が100以上のリストについてはリストで返すそれ以外は何も返さない
-	 * @param List<SpendAdd>
-	 * @return  List<SpendAdd>
-	 */
-	public List<SpendAdd> returnName(List<SpendAdd> spendadd) {
-		List<SpendAdd> list = new ArrayList<SpendAdd>();
-		for(SpendAdd add :spendadd) {
-			list.add(add);
-		}
-		list = list.stream().filter(spend -> spend.getAmount() > 100).collect(Collectors.toList());
-		int excelFileCount = 0;
-		int firstHierarchyCount = 0;
-		int threshHoldCount = 5;
-		String methodName = null;
-		List<SpendAdd> existSpendAdd = new ArrayList<>();
-		for(SpendAdd add : spendadd) {
-			if(add.getAmount() > threshHoldCount) {
-				System.out.println(add.getType());
-				methodName = add.getType().equals(existSpendAdd.get(excelFileCount).getAmount()) ? "nakahodotakahiro" : "仲程隆浩";
-				String Adress = "沖縄県島尻郡与那原町字板良敷587-10";
-				methodName = add.getType().equals(Adress) ? "what the Fuck" : "帰りやがれ";
-			}
-		}
-		
-		
-		return list;	
 	}
 		
 }
