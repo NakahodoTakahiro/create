@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/layout.css}">
+<script type="text/javascript" th:src="@{/js/chart.js}" charset="utf-8"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<title>家計簿アプリ</title>
+</head>
+	<body class="lp" id="img">
+		<div class="img">
+			<header><nav layout:replace="~{header::header}" class="p-3 mb-2 bg-light text-dark"></nav></header>
+				<h1 class="text-muted">シンプルでクールな家計簿アプリ<br/>
+					<span class="text-muted">Cool Bank</span>
+				</h1>
+		</div>
+		<div class="p-3 mb-2 bg-light text-dark" id="left">
+			<div class="p-3 mb-2 bg-light text-dark yosan">
+				<h3>予算</h3>
+				<p id="yosan"></p>
+			</div>
+			<div class="p-3 mb-2 bg-light text-dark sisyutu">
+				<h3>支出</h3>
+				<p id="sisyutu"></p>
+			</div>
+			<div class="p-3 mb-2 bg-light text-dark nokori">
+				<h3>残り</h3>
+				<p id="nokori"></p>
+			</div>
+			<!--<p id="date" class="text-muted"></p>
+			<pre id="pre">予算&#009;&#009;支出&#009;&#009;残り</pre>
+			<p id="result" class="text-muted"></p>-->
+			<div class="p-3 mb-2 bg-light text-dark char">
+				<canvas id="Char"></canvas> 
+			</div>	
+		</div>
+		<div class="p-3 mb-2 bg-light text-dark" id="right"></div>
+		<div class="clearfix"></div>
+		<footer layout:replace="~{footer::footer}"></footer>
+	</body>
+<script th:inline="javascript">
+const kakeibo = /*[[${MoneyList}]]*/"MoneyList";
+const spend = /*[[${spendList}]]*/"spendList";
+
+const today = new Date();
+let pre = "<pre>予算&#009;&#009;支出&#009;&#009;残り</pre>"
+let date = today.getFullYear() + "年" + (today.getMonth()+1) + "月" + "の状況"
+let result = spend[0].amount + "-" + kakeibo[0].amount + "=" + (spend[0].amount - kakeibo[0].amount)
+let yosan = 0
+spend.forEach(money => {
+	yosan += money.amount
+});
+let sisyutu = 0;
+kakeibo.forEach(money=>{
+	sisyutu += money.amount
+})
+let nokori = yosan - sisyutu
+document.getElementById("yosan").textContent = yosan
+document.getElementById("sisyutu").textContent = sisyutu
+document.getElementById("nokori").textContent = nokori
+  var ctx = document.getElementById("Char");
+  var myPieChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ["予算", "支出", "残り"], //データ項目のラベル
+      datasets: [{
+          backgroundColor: [
+              "#c97586",
+              "#bbbcde",
+              "#93b881",
+          ],
+          data: [yosan, sisyutu, nokori] //グラフのデータ
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        //グラフタイトル
+        text: '新法案賛否'
+      }
+    }
+  });
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/layout.css}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<title>家計簿編集</title>
+</head>
+<body>
+	<nav layout:replace="~{header::header}"></nav>
+		<h1>支出編集</h1>
+		<div th:if="${validationError}">
+			<ul>
+				<li th:each="List : ${validationError}" th:text="${List}" class="validation"></li>
+			</ul>
+		</div>
+			<form th:action="@{/update}" th:object="${moneyUpdate}" th:method="post">
+				<input type="hidden" th:field="*{kakeiboid}">
+				<div class="row mx-md-n5">
+					<div class="col-2 pt-3 border bg-light">
+						種別<span class="text-danger">*</span>
+					</div>
+					<div class="col py-2 border">
+						<select class="form-control" aria-label=".form-select-sm example" th:field="*{kakeibotype}">
+							<option th:value="食費" th:text="食費">
+							<option th:value="日用品費" th:text="日用品費">
+							<option th:value="被服費" th:text="被服費">
+							<option th:value="交通費" th:text="交通費">
+							<option th:value="医療費" th:text="医療費">
+							<option th:value="雑費" th:text="雑費">
+							<option th:value="美容費" th:text="美容費">
+						</select>
+					</div>
+				</div>
+				<div class="row mx-md-n5">
+					<div class="col-2 pt-3 border bg-light">
+						商品名<span class="text-danger">*</span>
+					</div>
+					<div class="col py-2 border">
+						<input type="text"	class="form-control" th:field="*{Productname}">
+					</div>
+				</div>
+				<div class="row mx-md-n5">
+					<div class="col-2 pt-3 border bg-light">
+						金額<span class="text-danger">*</span>
+					</div>
+					<div class="col py-2 border">
+						<input type="text"	class="form-control" th:field="*{Amount}">
+					</div>
+				</div>
+					<br/>
+				<div class="text-center"> 
+					 <input type="submit" class="btn btn-primary" value="保存">
+                	 <a th:href="@{/out}" class="btn btn-secondary">キャンセル</a>
+				</div>
+				
+			</form>
+		
+</body>
+</html>

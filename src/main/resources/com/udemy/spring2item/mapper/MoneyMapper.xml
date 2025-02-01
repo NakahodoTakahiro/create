@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.udemy.spring2item.mapper.MoneyMapper">
+
+
+<!-- 全件検索 -->
+<select id="selectAll" resultType="com.udemy.spring2item.entity.AppEntity">
+	SELECT * FROM spring_jdbc.kakeibo;
+</select> 
+<select id="spendselectAll" resultType="com.udemy.spring2item.entity.Spend">
+	SELECT * FROM spending
+</select>
+
+<!-- 主キー検索 -->
+<select id="findById" resultType="com.udemy.spring2item.entity.MoneyEntity">
+	SELECT * FROM kakeibo WHERE kakeiboid = #{kakeiboid}
+</select>
+<select id="spendfindById" resultType="com.udemy.spring2item.entity.Spend">
+	SELECT * FROM spending WHERE id = #{id}
+</select>
+
+<!-- 新規登録 -->
+<insert id="save">
+  INSERT INTO kakeibo 
+  	(kakeibodate,kakeibotype,Productname,Amount) 
+  VALUES 
+  	(CURRENT_TIMESTAMP,#{kakeibotype},#{Productname},#{Amount})
+</insert>
+<insert id="spendadd">
+	INSERT INTO spending
+		(type,date,amount)
+	VALUES
+		(#{type},CURRENT_TIMESTAMP,#{amount})
+</insert>
+
+<!-- 更新 -->
+<update id="update">
+	UPDATE kakeibo SET kakeibotype = #{kakeibotype} , Productname = #{Productname} ,Amount = #{Amount} WHERE kakeiboid = #{kakeiboid}
+</update>
+<update id="spendupdate">
+	UPDATE spending SET type = #{type} , amount = #{amount} WHERE id = #{id} 
+</update>
+
+<!-- 削除 -->
+<delete id="delete">
+	DELETE FROM kakeibo WHERE kakeiboid=#{kakeiboid}
+</delete>
+
+<delete id="spenddelete">
+	DELETE FROM spending WHERE id=#{id}
+</delete>
+</mapper>

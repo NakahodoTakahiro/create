@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/layout.css}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<title>収入/新規登録</title>
+</head>
+<body>
+	<nav layout:replace="~{header::header}"></nav>
+		<div class="body">
+		<h1>支出/新規登録</h1>
+		<div th:if="${validationError}">
+			<ul>
+				<li th:each="List : ${validationError}" th:text="${List}" class="validation"></li>
+			</ul>
+		</div>
+			<form th:action="@{/createspend}" th:object="${spendAdd}" th:method="post">
+				<div class="form-group">
+					<label for="type">種別</label>
+					<select class="form-control" aria-label=".form-select-sm example" th:field="*{type}" id="type">
+						<option th:value="給与" th:text="給与">
+						<option th:value="副業" th:text="副業">
+						<option th:value="株式配当" th:text="株式配当">
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="Amount">金額</label>
+					<input type="text" id="Amount" th:field="*{amount}" class="form-control">
+				</div>
+				<div>
+					<input type="submit" value="登録" class="btn btn-primary">
+				</div>
+			</form>
+	</div>
+</body>
+<footer layout:replace="~{footer::footer}"></footer>
+</html>

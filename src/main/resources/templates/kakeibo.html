@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/layout.css}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<title>家計簿/支出</title>
+</head>
+<body class="layout">
+<nav layout:replace="~{header::header}"></nav>
+	<div th:if="${MoneyList}" class="body">
+		<table class="table table-striped">
+			<tr>
+				<th>No</th>
+				<th>日時</th>
+				<th>種別</th>
+				<th>品名</th>
+				<th>金額</th>
+				<th></th>
+			</tr>
+			<tr th:each="money : ${MoneyList}">
+				<td th:text="${money.kakeiboid}"></td>
+				<td th:text="${money.kakeibodate}"></td>
+				<td th:text="${money.kakeibotype}"></td>
+				<td th:text="${money.Productname}"></td>
+				<td th:text="${money.Amount}"></td>
+				<td>
+					<a th:href="@{/edit/{kakeiboid}(kakeiboid=${money.kakeiboid})}" class="btn btn-primary">編集</a>
+					<a th:href="@{/delete/{kakeiboid}(kakeiboid=${money.kakeiboid})}" class="btn btn-secondary">削除</a>
+				</td>
+			</tr>
+		</table>
+		<div>
+			<p>支出合計 : <span id="result"></span></p>
+		</div>
+	</div>
+</body>
+<footer layout:replace="~{footer::footer}"></footer>
+<script th:inline="javascript">
+const form = /*[[${MoneyList}]]*/"MoneyList";
+let result = 0;
+for(i in form){
+	console.log(form[i]);
+	result+=form[i].amount;
+	console.log(result);
+}
+
+document.getElementById("result").innerHTML = result;
+</script>
+</html>
