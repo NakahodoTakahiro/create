@@ -2,6 +2,9 @@ package com.udemy.spring2item.service;
 
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,4 +75,13 @@ public class MoneyService {
 		moneyMapper.spendupdate(spend);
 	}
 	
+	// 指定したセルに値を書き込むメソッド
+	public void setExcelBalue(Sheet sheet, int rowIndex, int colIndex, String value) {
+		// rowIndex(0から始まり)の行を取得 or 作成
+		Row row = sheet.getRow(rowIndex) != null ? sheet.getRow(rowIndex) : sheet.createRow(rowIndex);
+		// colIndex（0始まり）のセルを取得 or 作成
+        Cell cell = row.getCell(colIndex) != null ? row.getCell(colIndex) : row.createCell(colIndex);
+		
+        cell.setCellValue(value);
+	}
 }
