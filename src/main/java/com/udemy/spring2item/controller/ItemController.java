@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.udemy.spring2item.entity.AppEntity;
 import com.udemy.spring2item.entity.MoneyEntity;
 import com.udemy.spring2item.entity.MoneyUpdate;
+import com.udemy.spring2item.entity.SkillSheetEntity;
 import com.udemy.spring2item.entity.Spend;
 import com.udemy.spring2item.entity.SpendAdd;
 import com.udemy.spring2item.entity.UserAddRequest;
@@ -259,6 +260,18 @@ public class ItemController {
 		
 		moneyService.spendadd(spendAdd);
 		return "redirect:/spend";
+	}
+	
+	/*
+	 * スキルシートダウンロード
+	 * @param
+	 * @return
+	 */
+	@PostMapping("/excel")
+	public byte[] getNameAndBirth(@Validated @ModelAttribute SkillSheetEntity skillsheet,int birth) {
+		
+		return moneyService.createExcel(skillsheet);
+		
 	}
 		
 }
