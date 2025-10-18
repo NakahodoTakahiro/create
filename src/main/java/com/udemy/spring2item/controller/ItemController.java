@@ -268,8 +268,10 @@ public class ItemController {
 	 * @return
 	 */
 	@PostMapping("/excel")
-	public String getNameAndBirth(SkillSheetEntity skillsheet,int birth) {
-		return "沖縄県島尻郡与那原町字板良敷";
+	public byte[] getNameAndBirth(@Validated @ModelAttribute SkillSheetEntity skillsheet,int birth) {
+		
+		return moneyService.createExcel(skillsheet);
+		
 	}
 		
 }

@@ -63,7 +63,7 @@ public class SkillSheetEntity implements Serializable{
 	@Pattern(regexp = "\\d+", message = "数字のみ入力してください")
 	private int Fromstartyear;
 	
-	//開始期間 年
+	//開始期間 月
 	@Pattern(regexp = "\\d+", message = "数字のみ入力してください")
     private int Fromstartmonth;
 
