@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -118,10 +120,10 @@ public class MoneyService {
 			// リファクタする必要ありそう
 			setExcelBalue(sheet, 12, 1, String.valueOf(skillsheet.getFromstartmonth()));
 			
-			workbook.write(bos);
+			getExcelFile(workbook);
 			
 		}catch(IOException e){
-			System.out.println("Excelの出力に失敗しました");
+			System.out.println("Excelファイルを開けませんでした");
 			
 		}
 		return bos.toByteArray();
@@ -136,4 +138,20 @@ public class MoneyService {
         cell.setCellValue(value);
 	}
 	
+	//Excelファイルをダウンロード
+	public byte[] getExcelFile(Workbook workbook) throws IOException{
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		workbook.write(bos);
+		return bos.toByteArray();
+	}
+	
+	//Zipファイルのダウンロード
+	public void getZipFile(ByteArrayOutputStream bosfile) throws IOException{
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ZipOutputStream zos = new ZipOutputStream(bos);
+		ZipEntry zipEntry = new ZipEntry("スキルシート.xlsx");
+		zos.putNextEntry(zipEntry);
+		zos.write(bosfile.toByteArray());
+		zos.close();
+	}
 }
